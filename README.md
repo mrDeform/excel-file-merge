@@ -10,3 +10,4 @@ the program creates a new Excel-file, which contains the first sheets of the sel
 * Clicking the "Merge Excel files" button, opens a dialog box in which you can select the files you want to merge.
 * The final file name in the format: "Alarm MBH_H-W {YY} {WW}", where {YY} is the year, {WW} is the number of the previous week.
 * Clicking the "Exit Program" button, close the program window.
+* Program execution can be monitored through the progress bar.
