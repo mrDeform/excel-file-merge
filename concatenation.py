@@ -1,6 +1,6 @@
 import xlrd
 import time
-import datetime
+from datetime import date, datetime
 from os import path
 from pandas import read_excel
 from pandas import ExcelWriter
@@ -12,10 +12,19 @@ from threading import Thread
 
 
 def get_final_filename():
-    # final filename with last week and current year
-    week = (datetime.datetime.now().isocalendar()[1]) - 1
-    year = (datetime.datetime.now().isocalendar()[0]) % 2000
-    return 'Alarm MBH_H-W{0}{1}.xlsx'.format(year, week)
+    # final filename include last week and year
+    year = datetime.now().isocalendar()[0] % 2000
+    last_week = datetime.now().isocalendar()[1] - 1
+    if last_week == 0:
+        year -= 1
+        last_week = date(2000 + year, 12, 28).isocalendar()[1]
+    final_filename = 'Alarm MBH_H-W{0}{1:02d}.xlsx'.format(year, last_week)
+    # checking an existing file
+    file_name_count = 0
+    while path.exists(final_filename):
+        file_name_count += 1
+        final_filename = 'Alarm MBH_H-W{0:%y}{1:02d}({2}).xlsx'.format(year, last_week, file_name_count)
+    return final_filename
 
 
 class App:
